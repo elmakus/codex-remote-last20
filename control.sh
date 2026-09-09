@@ -55,6 +55,7 @@ EOF
     done
     echo 'no remote connection; rolling back' >> "$HERE/switch-status.txt"
     "$HERE/control.sh" rollback
+    exit 1
     ;;
   rollback)
     if test -f "$DROPIN"; then
