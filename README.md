@@ -20,7 +20,7 @@ The proxy always forwards to chatgpt.com using verified
 TLS and listens on loopback only. It logs method names and counts, never payloads
 or authentication headers.
 
-Experimental acceptance: three focused tests, loopback health, remote connection,
+Experimental acceptance: focused tests, loopback health, remote connection,
 then owner checks the actual Android view. No claim of Android compatibility
 until the last check. `thread/items/list` is observed but not filtered in this
 minimal version; if Android uses that path to reload old content, the experiment
