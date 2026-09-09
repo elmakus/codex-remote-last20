@@ -23,3 +23,10 @@ test('segmented reply retains transport ACK IDs, lengths and original history',(
   out.forEach((e,i)=>{assert.equal(e.seq_id,4);assert.equal(e.segment_id,i);assert.equal(Buffer.from(e.message_chunk_base64,'base64').length,parts[i].length)});
   const decoded=JSON.parse(Buffer.concat(out.map(e=>Buffer.from(e.message_chunk_base64,'base64'))));assert.equal(decoded.result.thread.turns.length,25);assert.equal(turns.length,30);
 });
+test('bounds incomplete segmented replies',()=>{
+  const p=new Projection('target'),base={type:'server_message_chunk',client_id:'c',stream_id:'s',segment_id:0,segment_count:2,message_size_bytes:2,message_chunk_base64:Buffer.from('{').toString('base64')};
+  for(let seq_id=0;seq_id<101;seq_id++)assert.deepEqual(p.outbound({...base,seq_id}),[]);
+  assert.equal(p.chunks.size,100);
+  assert.equal(p.chunks.has(p.key(base,0)),false);
+  assert.equal(p.chunks.has(p.key(base,100)),true);
+});
