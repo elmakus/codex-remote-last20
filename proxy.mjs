@@ -57,7 +57,10 @@ export class Projection {
     if(e.type!=='server_message_chunk')return [e];
     const key=this.key(e,e.seq_id);
     let entry=this.chunks.get(key);
-    if(!entry){entry={parts:new Map(),time:Date.now()};this.chunks.set(key,entry);}
+    if(!entry){
+      entry={parts:new Map()};this.chunks.set(key,entry);
+      if(this.chunks.size>100)this.chunks.delete(this.chunks.keys().next().value);
+    }
     entry.parts.set(e.segment_id,e);
     if(entry.parts.size!==e.segment_count)return [];
     this.chunks.delete(key);
