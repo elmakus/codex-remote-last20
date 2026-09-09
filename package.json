@@ -1,0 +1,1 @@
+{"name":"codex-remote-last20-experiment","version":"0.1.0","private":true,"type":"module","scripts":{"test":"node --test test.mjs control.test.mjs"},"dependencies":{"ws":"8.21.3"}}
